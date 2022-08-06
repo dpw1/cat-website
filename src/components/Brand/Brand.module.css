@@ -1,0 +1,1 @@
+.root{display:flex;justify-content:center;cursor:pointer}@media(max-width: 800px){.root svg{width:90px;height:16.67px}}.Brand span{font-size:20px !important;line-height:unset !important;color:blue;font-family:var(--standard-header) !important}
