@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: `/cat-website`,
   siteMetadata: {
     title: `Memeowcats | Cute Cat Products`,
     description: `For every sale we make a donation to help cats in need. All purchases safely made through Amazon.`,

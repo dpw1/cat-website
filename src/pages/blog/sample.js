@@ -8,7 +8,7 @@ import Layout from '../../components/Layout/Layout';
 const SamplePage = (props) => {
   return (
     <Layout>
-      <div className={styles.root}>
+      {/* <div className={styles.root}>
         <Container>
           <div className={styles.blogContainer}>
             <Blog
@@ -86,7 +86,7 @@ const SamplePage = (props) => {
             </Blog>
           </div>
         </Container>
-      </div>
+      </div> */}
     </Layout>
   );
 };
