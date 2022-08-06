@@ -15,51 +15,51 @@ exports.onCreateWebpackConfig = (helper) => {
   }
 };
 
-exports.createPages = async ({ graphql, actions }) => {
-  console.log('test');
+// exports.createPages = async ({ graphql, actions }) => {
+//   console.log('test');
 
-  /* Create product pages */
-  const _products = await graphql(`
-    query getAllWooCommerceProducts {
-      allWcProducts {
-        edges {
-          node {
-            name
-            sku
-            price
-            description
-            images {
-              localFile {
-                childImageSharp {
-                  fluid {
-                    srcSet
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `);
+//   /* Create product pages */
+//   const _products = await graphql(`
+//     query getAllWooCommerceProducts {
+//       allWcProducts {
+//         edges {
+//           node {
+//             name
+//             sku
+//             price
+//             description
+//             images {
+//               localFile {
+//                 childImageSharp {
+//                   fluid {
+//                     srcSet
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   `);
 
-  console.log('================== products: ', _products);
+//   console.log('================== products: ', _products);
 
-  if (!_products) {
-    throw new Error(`Unable to fetch woocommerce products`);
-  }
+//   if (!_products) {
+//     throw new Error(`Unable to fetch woocommerce products`);
+//   }
 
-  const products = _products.data.allWcProducts;
+//   const products = _products.data.allWcProducts;
 
-  products.edges.forEach((edge) => {
-    const context = edge.node;
-    const slug = edge.node.sku;
-    const path = `products/${slug}`;
+//   products.edges.forEach((edge) => {
+//     const context = edge.node;
+//     const slug = edge.node.sku;
+//     const path = `products/${slug}`;
 
-    actions.createPage({
-      path,
-      component: require.resolve(`./src/templates/product-template.js`),
-      context,
-    });
-  });
-};
+//     actions.createPage({
+//       path,
+//       component: require.resolve(`./src/templates/product-template.js`),
+//       context,
+//     });
+//   });
+// };

@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Memeowcats`,
+    title: `Memeowcats | Cute Cat Products`,
+    description: `For every sale we make a donation to help cats in need. All purchases safely made through Amazon.`,
     siteUrl: `https://memeowcats.com`,
   },
   plugins: [

@@ -14,7 +14,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "format": "prettier --write \"{gatsby-*.js,src/**/*.js}\"",
-    "plop": "plop"
+    "plop": "plop",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public -b gh-pages"
   },
   "dependencies": {
     "@netlify/plugin-gatsby": "^3.4.1",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "gatsby-plugin-netlify": "^4.4.0",
+    "gh-pages": "^4.0.0",
     "netlify-plugin-cypress": "~2.2.0",
     "plop": "^3.0.5",
     "prettier": "^2.6.2"
