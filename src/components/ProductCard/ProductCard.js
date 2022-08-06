@@ -14,7 +14,7 @@ const ProductCard = (props) => {
   const image = product.images[0].localFile.childImageSharp.fluid.srcSet;
 
   const handleRouteToProduct = () => {
-    navigate('/product/sample');
+    // navigate('/product/sample');
   };
 
   const handleQuickView = (e) => {

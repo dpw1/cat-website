@@ -99,7 +99,7 @@ const OrderItem = (props) => {
               <div className={styles.itemContainer} key={index}>
                 <div
                   role={'presentation'}
-                  onClick={() => navigate('/product/sample')}
+                  // onClick={() => navigate('/product/sample')}
                   className={styles.imageContainer}
                 >
                   <img alt={item.alt} src={item.image}></img>
