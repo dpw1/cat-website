@@ -4,6 +4,9 @@ import * as styles from './AccountNav.module.css';
 
 const AccountNav = (props) => {
   const handleLogout = () => {
+    if (window === undefined || !window) {
+      return;
+    }
     window.localStorage.removeItem('key');
     navigate('/');
   };
