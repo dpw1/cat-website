@@ -51,6 +51,10 @@ const LoginPage = (props) => {
     if (validForm === true) {
       setErrorForm(errorState);
 
+      if (window === undefined || !window) {
+        return;
+      }
+
       //mock login
       if (loginForm.email !== 'error@example.com') {
         navigate('/account');

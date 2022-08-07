@@ -13,6 +13,10 @@ const Drawer = ({
   hideCross = false,
 }) => {
   useEffect(() => {
+    if (window === undefined || !window) {
+      return;
+    }
+
     window.addEventListener('keydown', escapeHandler);
     return () => window.removeEventListener('keydown', escapeHandler);
   }, []);

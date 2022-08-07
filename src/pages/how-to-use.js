@@ -12,6 +12,10 @@ const HowToUsePage = (props) => {
 
   const handleScroll = (elementReference) => {
     if (elementReference) {
+      if (window === undefined || !window) {
+        return;
+      }
+
       window.scrollTo({
         behavior: 'smooth',
         top: elementReference.current.offsetTop - 280,

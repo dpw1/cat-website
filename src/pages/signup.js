@@ -65,6 +65,11 @@ const SignupPage = (props) => {
     if (validForm === true) {
       setErrorForm(errorState);
       navigate('/accountSuccess');
+
+      if (window === undefined || !window) {
+        return;
+      }
+
       window.localStorage.setItem('key', 'sampleToken');
       //create account endpoint
     } else {

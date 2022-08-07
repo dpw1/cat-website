@@ -58,11 +58,16 @@ const Header = (prop) => {
 
   // hide menu onscroll
   useEffect(() => {
+    if (window === undefined || !window) {
+      return;
+    }
+
     const onScroll = () => {
       setShowMenu(false);
       setShowSearch(false);
       setActiveMenu(undefined);
     };
+
     window.removeEventListener('scroll', onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);

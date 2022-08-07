@@ -7,6 +7,7 @@ const AccountNav = (props) => {
     if (window === undefined || !window) {
       return;
     }
+
     window.localStorage.removeItem('key');
     navigate('/');
   };

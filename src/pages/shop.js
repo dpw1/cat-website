@@ -19,6 +19,10 @@ const ShopPage = (props) => {
   const data = generateMockProductData(6, 'woman');
 
   useEffect(() => {
+    if (window === undefined || !window) {
+      return;
+    }
+
     window.addEventListener('keydown', escapeHandler);
     return () => window.removeEventListener('keydown', escapeHandler);
   }, []);

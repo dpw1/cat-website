@@ -50,6 +50,10 @@ const SupportPage = (props) => {
   };
 
   useEffect(() => {
+    if (window === undefined || !window) {
+      return;
+    }
+
     window.scrollTo(0, 0);
   }, []);
 
@@ -59,6 +63,9 @@ const SupportPage = (props) => {
       const tempCurrent = subpages.filter((detail) => detail.key === hash)[0];
       if (tempCurrent.key !== current.key) {
         setCurrent(tempCurrent);
+        if (window === undefined || !window) {
+          return;
+        }
         window.scrollTo(0, 475);
       }
     }
