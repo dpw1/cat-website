@@ -41,7 +41,7 @@ const FavoritesPage = (props) => {
 
   return (
     <Layout>
-      <div className={styles.root}>
+      {/* <div className={styles.root}>
         <Container size={'large'}>
           <Breadcrumbs
             crumbs={[
@@ -86,7 +86,7 @@ const FavoritesPage = (props) => {
             </Button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </Layout>
   );
 };

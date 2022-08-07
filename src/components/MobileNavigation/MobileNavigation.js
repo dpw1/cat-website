@@ -19,10 +19,6 @@ const MobileNavigation = (props) => {
   const [depth, setDepth] = useState(0);
 
   const handleLogout = () => {
-    if (window === undefined || !window) {
-      return;
-    }
-
     window.localStorage.removeItem('key');
     navigate('/');
     close();

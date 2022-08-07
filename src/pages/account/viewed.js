@@ -19,7 +19,7 @@ const RecentlyViewedPage = (props) => {
 
   return (
     <Layout>
-      <AccountLayout>
+      {/* <AccountLayout>
         <Breadcrumbs
           crumbs={[
             { link: '/', label: 'Home' },
@@ -38,7 +38,7 @@ const RecentlyViewedPage = (props) => {
             />
           </div>
         </div>
-      </AccountLayout>
+      </AccountLayout> */}
     </Layout>
   );
 };

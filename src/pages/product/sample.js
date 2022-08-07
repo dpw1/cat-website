@@ -34,7 +34,7 @@ const ProductPage = (props) => {
 
   return (
     <Layout>
-      <div className={styles.root}>
+      {/* <div className={styles.root}>
         <Container size={'large'} spacing={'min'}>
           <Breadcrumbs
             crumbs={[
@@ -160,7 +160,7 @@ const ProductPage = (props) => {
             bgColor={'var(--standard-light-grey)'}
           />
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 };

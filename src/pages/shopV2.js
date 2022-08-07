@@ -28,7 +28,7 @@ const ShopV2Page = (props) => {
 
   return (
     <Layout>
-      <div className={styles.root}>
+      {/* <div className={styles.root}>
         <Container size={'large'} spacing={'min'}>
           <Breadcrumbs
             crumbs={[{ link: '/', label: 'Home' }, { label: 'Woman' }]}
@@ -84,7 +84,7 @@ const ShopV2Page = (props) => {
           </div>
         </Container>
       </div>
-      <LayoutOption />
+      <LayoutOption /> */}
     </Layout>
   );
 };

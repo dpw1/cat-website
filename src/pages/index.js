@@ -33,9 +33,7 @@ export const query = graphql`
           images {
             localFile {
               childImageSharp {
-                fluid {
-                  srcSet
-                }
+                gatsbyImageData(width: 700)
               }
             }
           }

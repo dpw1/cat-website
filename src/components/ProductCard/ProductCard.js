@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { navigate } from 'gatsby';
 import * as styles from './ProductCard.module.css';
+import './ProductCard.scss';
 
 import Icon from '../Icons/Icon';
 import CurrencyFormatter from '../CurrencyFormatter';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const ProductCard = (props) => {
   const [isWishlist, setIsWishlist] = useState(false);
@@ -11,7 +13,7 @@ const ProductCard = (props) => {
 
   const { product } = props;
 
-  const image = product.images[0].localFile.childImageSharp.fluid.srcSet;
+  const image = getImage(product.images[0].localFile.childImageSharp);
 
   const handleRouteToProduct = () => {
     // navigate('/product/sample');
@@ -34,7 +36,10 @@ const ProductCard = (props) => {
         onClick={() => handleRouteToProduct()}
         role={'presentation'}
       >
-        <img srcSet={image} alt={product.name}></img>
+        <GatsbyImage
+          className={`ProductCard-image`}
+          image={image}
+        ></GatsbyImage>
       </div>
       <div className={styles.detailsContainer}>
         <span className={`ProductCard-name ${styles.productName}`}>

@@ -3,10 +3,6 @@ import * as styles from './Modal.module.css';
 
 const Modal = ({ children, visible, close }) => {
   useEffect(() => {
-    if (window === undefined || !window) {
-      return;
-    }
-
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
   }, [close]);

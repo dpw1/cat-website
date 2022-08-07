@@ -16,25 +16,30 @@ const ProductCardGrid = (props) => {
     spacing,
     showSlider = false,
   } = props;
+
   const columnCount = {
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
   };
 
   const renderCards = () => {
-    return products.map((_product, index) => {
-      const product = _product.node;
-      return (
-        <ProductCard
-          key={index}
-          image={product.image}
-          meta={product.meta}
-          originalPrice={product.originalPrice}
-          link={product.link}
-          product={product}
-          showQuickView={() => setShowQuickView(true)}
-        />
-      );
-    });
+    return (
+      products &&
+      products.length >= 1 &&
+      products.map((_product, index) => {
+        const product = _product.node;
+        return (
+          <ProductCard
+            key={index}
+            image={product.image}
+            meta={product.meta}
+            originalPrice={product.originalPrice}
+            link={product.link}
+            product={product}
+            showQuickView={() => setShowQuickView(true)}
+          />
+        );
+      })
+    );
   };
 
   return (

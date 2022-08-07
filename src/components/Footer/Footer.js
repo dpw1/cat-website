@@ -20,10 +20,6 @@ const Footer = (prop) => {
   };
 
   const handleSocialClick = (platform) => {
-    if (window === undefined || !window) {
-      return;
-    }
-
     window.open(Config.social[platform]);
   };
 

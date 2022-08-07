@@ -8,10 +8,6 @@ const CurrencyFormatter = ({
   appendZero = false,
   useDollar = false,
 }) => {
-  if (window === undefined || !window) {
-    return;
-  }
-
   let displayAmount =
     (typeof amount !== 'number' && parseFloat(amount?.replace('$', ''))) ||
     amount;
