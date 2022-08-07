@@ -5,7 +5,8 @@ import './ProductCard.scss';
 
 import Icon from '../Icons/Icon';
 import CurrencyFormatter from '../CurrencyFormatter';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
+import { Link } from 'gatsby';
 
 const ProductCard = (props) => {
   const [isWishlist, setIsWishlist] = useState(false);
@@ -41,7 +42,7 @@ const ProductCard = (props) => {
           image={image}
         ></GatsbyImage>
       </div>
-      <div className={styles.detailsContainer}>
+      <div className={`ProductCard-content ${styles.detailsContainer}`}>
         <span className={`ProductCard-name ${styles.productName}`}>
           {product.name}
         </span>
@@ -59,6 +60,7 @@ const ProductCard = (props) => {
         </div>
         <span className={styles.meta}>{meta}</span>
       </div>
+      <Link className="ProductCard-link" to={`/products/${product.sku}`}></Link>
     </div>
   );
 };

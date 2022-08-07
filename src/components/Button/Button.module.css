@@ -27,7 +27,6 @@
 @media (hover: hover) {
     .primary:hover {
         border: 2px solid var(--standard-dark-grey);
-        background-color: var(--standard-dark-grey);
     }
 }
 
@@ -57,6 +56,35 @@
         background-color: rgba(255,255,255,0.05);
     }
 }
+
+
+button[class^='Button']{
+    position:relative;
+    overflow:hidden;
+    transition:background 0.2s ease 0s;
+  }
+  
+  button[class^='Button']:after{
+    content:"";
+  position:absolute;
+  top:0;
+  left:150%;
+  width:200%;
+  height:100%;
+  transform:skewX(-20deg);
+  background-image:linear-gradient(90deg,transparent, hsla(0, 0%, 100%, 0.25),transparent);
+  }
+  
+  
+  button[class^='Button']:hover:after{
+    animation:shine 0.75s cubic-bezier(0.01, 0.56, 1, 1);
+  }
+  
+  @keyframes shine{
+    to{
+      left:-200%;
+    }
+  }
 
 /* .tertiary {
     border: 1px solid var(--gray-alt);

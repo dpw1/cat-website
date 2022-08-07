@@ -1,1 +1,1 @@
-[id] [id] .Hero-content{max-width:80%;width:100%}
+[id] [id] .Hero{position:relative}[id] [id] .Hero-content{max-width:80%;width:100%}[id] [id] .Hero>*{z-index:1}[id] [id] .Hero:after{content:"";position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;background:#000;opacity:.1;z-index:0}

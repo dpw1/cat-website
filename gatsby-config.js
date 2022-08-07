@@ -1,5 +1,4 @@
 module.exports = {
-  pathPrefix: `/cat-website`,
   siteMetadata: {
     title: `Memeowcats | Cute Cat Products`,
     description: `For every sale we make a donation to help cats in need. All purchases safely made through Amazon.`,
@@ -28,6 +27,12 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`, // Needed for dynamic images
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: `668869491`,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

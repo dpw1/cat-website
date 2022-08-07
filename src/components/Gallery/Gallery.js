@@ -3,6 +3,9 @@ import React from 'react';
 import Slider from '../Slider';
 
 import * as styles from './Gallery.module.css';
+import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
+
+import './Gallery.scss';
 
 const Gallery = (props) => {
   const { images } = props;
@@ -13,9 +16,11 @@ const Gallery = (props) => {
 
   const renderImages = () => {
     return images?.map((imageObject, index) => {
+      const image = getImage(imageObject.localFile.childImageSharp);
+
       return (
         <div key={index} className={styles.imageContainer}>
-          <img alt={imageObject.alt} src={imageObject.image} />
+          <GatsbyImage image={image}></GatsbyImage>
         </div>
       );
     });
@@ -25,13 +30,19 @@ const Gallery = (props) => {
     <div className={styles.root}>
       <div className={styles.cardGrid}>
         {images?.map((imageObject, index) => {
+          const image = getImage(imageObject.localFile.childImageSharp);
+
           return (
-            <div key={index} className={styles.imageContainer}>
-              <img alt={imageObject.alt} src={imageObject.image} />
+            <div
+              key={index}
+              className={`Gallery-imageContainer ${styles.imageContainer}`}
+            >
+              <GatsbyImage image={image}></GatsbyImage>
             </div>
           );
         })}
       </div>
+      {/* Mobile */}
       <div className={styles.mobileSlider}>
         <Slider settings={customSliderSettings}>
           {images && renderImages()}

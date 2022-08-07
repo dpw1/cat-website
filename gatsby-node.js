@@ -4,8 +4,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 exports.onCreateWebpackConfig = (helper) => {
   const { stage, actions, loaders, getConfig } = helper;
 
-  console.log('current stage::::::::::::::::::;', stage, '\n\n');
-
   if (stage === 'develop' || stage === 'build-javascript') {
     const config = getConfig();
     const miniCssExtractPlugin = config.plugins.find(
@@ -16,68 +14,53 @@ exports.onCreateWebpackConfig = (helper) => {
     }
     actions.replaceWebpackConfig(config);
   }
-
-  if (stage === 'build-html' || stage === 'develop-html') {
-    console.log('building html...............;');
-
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /product\/sample/,
-            use: loaders.null(),
-          },
-        ],
-      },
-    });
-  }
 };
 
-// exports.createPages = async ({ graphql, actions }) => {
-//   console.log('test');
+exports.createPages = async ({ graphql, actions }) => {
+  /* Create product pages */
+  const _products = await graphql(`
+    query getAllWooCommerceProducts {
+      allWcProducts {
+        edges {
+          node {
+            name
+            sku
+            price
+            description
+            categories {
+              id
+              name
+            }
+            images {
+              localFile {
+                childImageSharp {
+                  gatsbyImageData(width: 700)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
 
-//   /* Create product pages */
-//   const _products = await graphql(`
-//     query getAllWooCommerceProducts {
-//       allWcProducts {
-//         edges {
-//           node {
-//             name
-//             sku
-//             price
-//             description
-//             images {
-//               localFile {
-//                 childImageSharp {
-//                   fluid {
-//                     srcSet
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `);
+  console.log('================== products: ', _products);
 
-//   console.log('================== products: ', _products);
+  if (!_products) {
+    throw new Error(`Unable to fetch woocommerce products`);
+  }
 
-//   if (!_products) {
-//     throw new Error(`Unable to fetch woocommerce products`);
-//   }
+  const products = _products.data.allWcProducts;
 
-//   const products = _products.data.allWcProducts;
+  products.edges.forEach((edge) => {
+    const context = edge.node;
+    const slug = edge.node.sku;
+    const path = `products/${slug}`;
 
-//   products.edges.forEach((edge) => {
-//     const context = edge.node;
-//     const slug = edge.node.sku;
-//     const path = `products/${slug}`;
-
-//     actions.createPage({
-//       path,
-//       component: require.resolve(`./src/templates/product-template.js`),
-//       context,
-//     });
-//   });
-// };
+    actions.createPage({
+      path,
+      component: require.resolve(`./src/pages/product/product.js`),
+      context,
+    });
+  });
+};

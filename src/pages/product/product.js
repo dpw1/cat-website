@@ -18,13 +18,19 @@ import Icon from '../../components/Icons/Icon';
 import ProductCardGrid from '../../components/ProductCardGrid';
 import { navigate } from 'gatsby';
 
+import ReactHtmlParser from 'react-html-parser';
+
 import AddItemNotificationContext from '../../context/AddItemNotificationProvider';
+import './product.scss';
+
+import { createAmazonURL } from './../../helpers/general';
 
 const ProductPage = (props) => {
   const ctxAddItemNotification = useContext(AddItemNotificationContext);
   const showNotification = ctxAddItemNotification.showNotification;
   const sampleProduct = generateMockProductData(1, 'sample')[0];
-  const [qty, setQty] = useState(0);
+
+  const [text, setText] = useState(`Buy on Amazon`);
   const [isWishlist, setIsWishlist] = useState(false);
   const [activeSwatch, setActiveSwatch] = useState(
     sampleProduct.colorOptions[0]
@@ -32,99 +38,77 @@ const ProductPage = (props) => {
   const [activeSize, setActiveSize] = useState(sampleProduct.sizeOptions[0]);
   const suggestions = generateMockProductData(4, 'woman');
 
+  const product = props.pageContext;
+
+  console.log('xxx', product);
+
+  const categories = [
+    { link: '/', label: 'Home' },
+    { link: `/`, label: `${ReactHtmlParser(product.categories[0].name)}` },
+  ];
+
+  function redirectToAmazon() {
+    const url = createAmazonURL(product.sku);
+    window.location.href = url;
+  }
+
   return (
     <Layout>
-      {/* <div className={styles.root}>
+      <div className={`Product ${styles.root}`}>
         <Container size={'large'} spacing={'min'}>
-          <Breadcrumbs
-            crumbs={[
-              { link: '/', label: 'Home' },
-              { label: 'Men', link: '/shop' },
-              { label: 'Sweater', link: '/shop' },
-              { label: `${sampleProduct.name}` },
-            ]}
-          />
+          <Breadcrumbs crumbs={categories} />
           <div className={styles.content}>
             <div className={styles.gallery}>
-              <Gallery images={sampleProduct.gallery} />
+              <Gallery images={product.images} />
             </div>
             <div className={styles.details}>
-              <h1>{sampleProduct.name}</h1>
-              <span className={styles.vendor}> by {sampleProduct.vendor}</span>
+              <h1>{product.name}</h1>
 
               <div className={styles.priceContainer}>
-                <CurrencyFormatter appendZero amount={sampleProduct.price} />
-              </div>
-
-              <div>
-                <SwatchList
-                  swatchList={sampleProduct.colorOptions}
-                  activeSwatch={activeSwatch}
-                  setActiveSwatch={setActiveSwatch}
-                />
-              </div>
-
-              <div className={styles.sizeContainer}>
-                <SizeList
-                  sizeList={sampleProduct.sizeOptions}
-                  activeSize={activeSize}
-                  setActiveSize={setActiveSize}
-                />
-              </div>
-
-              <div className={styles.quantityContainer}>
-                <span>Quantity</span>
-                <AdjustItem qty={qty} setQty={setQty} />
+                <CurrencyFormatter appendZero amount={product.price} />
               </div>
 
               <div className={styles.actionContainer}>
                 <div className={styles.addToButtonContainer}>
                   <Button
-                    onClick={() => showNotification()}
+                    onClick={() => {
+                      setText(`Loading...`);
+                      redirectToAmazon();
+                    }}
                     fullWidth
                     level={'primary'}
                   >
-                    Add to Bag
+                    {text}
                   </Button>
-                </div>
-                <div
-                  className={styles.wishlistActionContainer}
-                  role={'presentation'}
-                  onClick={() => setIsWishlist(!isWishlist)}
-                >
-                  <Icon symbol={'heart'}></Icon>
-                  <div
-                    className={`${styles.heartFillContainer} ${
-                      isWishlist === true ? styles.show : styles.hide
-                    }`}
-                  >
-                    <Icon symbol={'heartFill'}></Icon>
-                  </div>
                 </div>
               </div>
 
-              <div className={styles.description}>
-                <p>{sampleProduct.description}</p>
-                <span>Product code: {sampleProduct.productCode}</span>
+              <div className={`Product-description ${styles.description}`}>
+                {ReactHtmlParser(product.description)}
+
+                <a href="">View more details on Amazon</a>
               </div>
 
               <div className={styles.informationContainer}>
                 <Accordion
                   type={'plus'}
                   customStyle={styles}
-                  title={'composition & care'}
+                  title={'Safe purchase'}
                 >
                   <p className={styles.information}>
-                    {sampleProduct.description}
+                    All purchases are redirected to amazon.com for your safety
+                    and comfort.
                   </p>
                 </Accordion>
                 <Accordion
                   type={'plus'}
                   customStyle={styles}
-                  title={'delivery & returns'}
+                  title={'Help cats while shopping'}
                 >
                   <p className={styles.information}>
-                    {sampleProduct.description}
+                    We've put effort to bring together two amazing things:
+                    shopping and helping others. With every purchase we're
+                    donating money to help cats in need.
                   </p>
                 </Accordion>
                 <Accordion type={'plus'} customStyle={styles} title={'help'}>
@@ -160,7 +144,7 @@ const ProductPage = (props) => {
             bgColor={'var(--standard-light-grey)'}
           />
         </div>
-      </div> */}
+      </div>
     </Layout>
   );
 };

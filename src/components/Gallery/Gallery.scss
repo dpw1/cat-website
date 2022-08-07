@@ -1,0 +1,7 @@
+.Gallery {
+  &-imageContainer {
+    @media (min-width: 768px) {
+      height: auto !important;
+    }
+  }
+}

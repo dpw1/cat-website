@@ -58,7 +58,7 @@ const IndexPage = ({ data: _products }) => {
       {/* Hero Container */}
       <Hero
         image={'/banner1.png'}
-        title={`Change cats' lives.\nLook cute.`}
+        title={`Help cats while shopping in Amazon.`}
         subtitle={
           'For every sale we make a donation to Cat Rescue Toronto.\nShop safely from Amazon.'
         }
@@ -126,14 +126,6 @@ const IndexPage = ({ data: _products }) => {
           '“We believe in two things: the pursuit of quality in everything we do, and looking after one another. Everything else should take care of itself.”'
         }
       />
-
-      {/* Blog Grid */}
-      <div className={styles.blogsContainer}>
-        <Container size={'large'}>
-          <Title name={'Journal'} subtitle={'Notes on life and style'} />
-          <BlogPreviewGrid data={blogData} />
-        </Container>
-      </div>
 
       {/* Promotion */}
       <div className={styles.sustainableContainer}>

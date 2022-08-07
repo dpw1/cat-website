@@ -1,0 +1,10 @@
+.Product {
+  &-description {
+    ul {
+      list-style: circle;
+      padding-left: 18px;
+    }
+    line-height: 1.4;
+    font-size: 16px;
+  }
+}
