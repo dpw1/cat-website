@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgatsby_ecommerce_theme=self.webpackChunkgatsby_ecommerce_theme||[]).push([[399],{7623:function(e,t,c){c.r(t);var n=c(7294),u=c(1597);t.default=function(e){return(0,n.useEffect)((function(){(0,u.navigate)("/account/orders/")}),[]),n.createElement(n.Fragment,null)}}}]);
+//# sourceMappingURL=component---src-pages-account-index-js-5a519ee49c20befae5f9.js.map
