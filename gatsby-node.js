@@ -2,7 +2,10 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // https://stackoverflow.com/questions/63124432/how-do-i-configure-mini-css-extract-plugin-in-gatsby
 exports.onCreateWebpackConfig = (helper) => {
-  const { stage, actions, getConfig } = helper;
+  const { stage, actions, loaders, getConfig } = helper;
+
+  console.log('current stage::::::::::::::::::;', stage, '\n\n');
+
   if (stage === 'develop' || stage === 'build-javascript') {
     const config = getConfig();
     const miniCssExtractPlugin = config.plugins.find(
@@ -12,6 +15,21 @@ exports.onCreateWebpackConfig = (helper) => {
       miniCssExtractPlugin.options.ignoreOrder = true;
     }
     actions.replaceWebpackConfig(config);
+  }
+
+  if (stage === 'build-html' || stage === 'develop-html') {
+    console.log('building html...............;');
+
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /product\/sample/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    });
   }
 };
 
