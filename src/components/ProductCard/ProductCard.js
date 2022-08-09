@@ -7,6 +7,8 @@ import Icon from '../Icons/Icon';
 import CurrencyFormatter from '../CurrencyFormatter';
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
+import { al } from '../../helpers/utils';
+import { isDevEnvironment } from './../../helpers/utils';
 
 const ProductCard = (props) => {
   const [isWishlist, setIsWishlist] = useState(false);
@@ -14,7 +16,11 @@ const ProductCard = (props) => {
 
   const { product } = props;
 
-  const image = getImage(product.images[0].localFile.childImageSharp);
+  const src = product.images[0].src;
+
+  const image = product.images[0].hasOwnProperty('localFile')
+    ? getImage(product.images[0].localFile.childImageSharp)
+    : '';
 
   const handleRouteToProduct = () => {
     // navigate('/product/sample');
@@ -37,10 +43,14 @@ const ProductCard = (props) => {
         onClick={() => handleRouteToProduct()}
         role={'presentation'}
       >
-        <GatsbyImage
-          className={`ProductCard-image`}
-          image={image}
-        ></GatsbyImage>
+        {isDevEnvironment() ? (
+          <img src={src} className="ProductCard-image"></img>
+        ) : (
+          <GatsbyImage
+            className={`ProductCard-image`}
+            image={image}
+          ></GatsbyImage>
+        )}
       </div>
       <div className={`ProductCard-content ${styles.detailsContainer}`}>
         <span className={`ProductCard-name ${styles.productName}`}>

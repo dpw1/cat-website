@@ -1,0 +1,23 @@
+.Footer {
+  &-bottom {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  [class*='Bottom'] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contentBottom {
+    display: flex !important;
+  }
+
+  [class*='copyrightContainer'] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}

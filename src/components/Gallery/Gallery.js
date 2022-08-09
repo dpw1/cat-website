@@ -6,6 +6,7 @@ import * as styles from './Gallery.module.css';
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 
 import './Gallery.scss';
+import { isDevEnvironment } from './../../helpers/utils';
 
 const Gallery = (props) => {
   const { images } = props;
@@ -16,11 +17,18 @@ const Gallery = (props) => {
 
   const renderImages = () => {
     return images?.map((imageObject, index) => {
-      const image = getImage(imageObject.localFile.childImageSharp);
+      const src = imageObject.src;
+      const image = imageObject.hasOwnProperty('localFile')
+        ? getImage(imageObject.localFile.childImageSharp)
+        : '';
 
       return (
         <div key={index} className={styles.imageContainer}>
-          <GatsbyImage image={image}></GatsbyImage>
+          {isDevEnvironment() ? (
+            <img src={src}></img>
+          ) : (
+            <GatsbyImage image={image}></GatsbyImage>
+          )}
         </div>
       );
     });
@@ -30,7 +38,10 @@ const Gallery = (props) => {
     <div className={styles.root}>
       <div className={styles.cardGrid}>
         {images?.map((imageObject, index) => {
-          const image = getImage(imageObject.localFile.childImageSharp);
+          const src = imageObject.src;
+          const image = imageObject.hasOwnProperty('localFile')
+            ? getImage(imageObject.localFile.childImageSharp)
+            : '';
 
           return (
             <div
@@ -38,6 +49,11 @@ const Gallery = (props) => {
               className={`Gallery-imageContainer ${styles.imageContainer}`}
             >
               <GatsbyImage image={image}></GatsbyImage>
+              {isDevEnvironment() ? (
+                <img src={src}></img>
+              ) : (
+                <GatsbyImage image={image}></GatsbyImage>
+              )}
             </div>
           );
         })}

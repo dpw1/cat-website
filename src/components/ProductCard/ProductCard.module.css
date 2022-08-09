@@ -59,9 +59,7 @@
     color: var(--grey-placeholder);
 }
 
-.prices > span:first-child {
-    margin-right: 16px;
-}
+
 
 .bagContainer {
     position: absolute;

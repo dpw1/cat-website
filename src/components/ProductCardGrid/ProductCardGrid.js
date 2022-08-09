@@ -8,14 +8,7 @@ import Slider from '../Slider';
 
 const ProductCardGrid = (props) => {
   const [showQuickView, setShowQuickView] = useState(false);
-  const {
-    height,
-    columns = 3,
-    data,
-    products,
-    spacing,
-    showSlider = false,
-  } = props;
+  const { columns = 4, data, products, spacing, showSlider = false } = props;
 
   const columnCount = {
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
@@ -62,8 +55,6 @@ const ProductCardGrid = (props) => {
       <Drawer visible={showQuickView} close={() => setShowQuickView(false)}>
         <QuickView close={() => setShowQuickView(false)} />
       </Drawer>
-
-      {console.log('look', props)}
     </div>
   );
 };

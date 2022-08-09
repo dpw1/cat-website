@@ -4,6 +4,8 @@ import Button from '../Button';
 import { Link } from 'gatsby';
 import './Hero.scss';
 
+import ReactHtmlParser from 'react-html-parser';
+
 const Hero = (props) => {
   const {
     title,
@@ -28,7 +30,9 @@ const Hero = (props) => {
       >
         {header && <span className={styles.header}>{header}</span>}
         {title && <h2 className={styles.title}>{title}</h2>}
-        {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
+        {subtitle && (
+          <span className={styles.subtitle}>{ReactHtmlParser(subtitle)}</span>
+        )}
         {ctaText && (
           <Button
             className={`${styles.ctaButton} ${ctaStyle}`}

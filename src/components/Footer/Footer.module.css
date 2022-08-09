@@ -102,8 +102,8 @@
 
 .contentBottom {
     margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    
+    
 }
 
 .settings {
@@ -179,6 +179,7 @@
 .iconContainer {
     color: var(--standard-white);
 }
+
 
 @media (hover: hover) {
     .socialIconContainer:hover {

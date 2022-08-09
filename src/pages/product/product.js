@@ -40,111 +40,115 @@ const ProductPage = (props) => {
 
   const product = props.pageContext;
 
-  console.log('xxx', product);
-
   const categories = [
     { link: '/', label: 'Home' },
-    { link: `/`, label: `${ReactHtmlParser(product.categories[0].name)}` },
+    {
+      link: `/`,
+      label: `${ReactHtmlParser(
+        product &&
+          product.hasOwnProperty('categories') &&
+          product.categories[0].hasOwnProperty('name') &&
+          product.categories[0].name
+      )}`,
+    },
   ];
 
   function redirectToAmazon() {
     const url = createAmazonURL(product.sku);
-    window.location.href = url;
+
+    // if (window) {
+    //   window.location.href = url;
+    // }
   }
 
   return (
     <Layout>
-      <div className={`Product ${styles.root}`}>
-        <Container size={'large'} spacing={'min'}>
-          <Breadcrumbs crumbs={categories} />
-          <div className={styles.content}>
-            <div className={styles.gallery}>
-              <Gallery images={product.images} />
-            </div>
-            <div className={styles.details}>
-              <h1>{product.name}</h1>
-
-              <div className={styles.priceContainer}>
-                <CurrencyFormatter appendZero amount={product.price} />
+      {product && product.hasOwnProperty('name') && (
+        <div className={`Product ${styles.root}`}>
+          <Container size={'large'} spacing={'min'}>
+            <Breadcrumbs crumbs={categories} />
+            <div className={styles.content}>
+              <div className={styles.gallery}>
+                <Gallery images={product.images} />
               </div>
+              <div className={styles.details}>
+                <h1>{product.name}</h1>
 
-              <div className={styles.actionContainer}>
-                <div className={styles.addToButtonContainer}>
-                  <Button
-                    onClick={() => {
-                      setText(`Loading...`);
+                <div className={styles.priceContainer}>
+                  <CurrencyFormatter appendZero amount={product.price} />
+                </div>
+
+                <div className={styles.actionContainer}>
+                  <div className={styles.addToButtonContainer}>
+                    <Button
+                      onClick={() => {
+                        setText(`Loading...`);
+                        redirectToAmazon();
+                      }}
+                      fullWidth
+                      level={'primary'}
+                    >
+                      {text}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className={`Product-description ${styles.description}`}>
+                  {ReactHtmlParser(product.description)}
+
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
                       redirectToAmazon();
                     }}
-                    fullWidth
-                    level={'primary'}
                   >
-                    {text}
-                  </Button>
+                    View more details on Amazon
+                  </a>
+                </div>
+
+                <div className={styles.informationContainer}>
+                  <Accordion
+                    type={'plus'}
+                    customStyle={styles}
+                    title={'Safe purchase'}
+                  >
+                    <p className={styles.information}>
+                      All purchases are redirected to amazon.com for your safety
+                      and comfort.
+                    </p>
+                  </Accordion>
+                  <Accordion
+                    type={'plus'}
+                    customStyle={styles}
+                    title={'Help cats while shopping'}
+                  >
+                    <p className={styles.information}>
+                      We've put effort to bring together two amazing things:
+                      shopping and helping others. With every purchase we're
+                      donating money to help cats in need.
+                    </p>
+                  </Accordion>
                 </div>
               </div>
-
-              <div className={`Product-description ${styles.description}`}>
-                {ReactHtmlParser(product.description)}
-
-                <a href="">View more details on Amazon</a>
-              </div>
-
-              <div className={styles.informationContainer}>
-                <Accordion
-                  type={'plus'}
-                  customStyle={styles}
-                  title={'Safe purchase'}
-                >
-                  <p className={styles.information}>
-                    All purchases are redirected to amazon.com for your safety
-                    and comfort.
-                  </p>
-                </Accordion>
-                <Accordion
-                  type={'plus'}
-                  customStyle={styles}
-                  title={'Help cats while shopping'}
-                >
-                  <p className={styles.information}>
-                    We've put effort to bring together two amazing things:
-                    shopping and helping others. With every purchase we're
-                    donating money to help cats in need.
-                  </p>
-                </Accordion>
-                <Accordion type={'plus'} customStyle={styles} title={'help'}>
-                  <p className={styles.information}>
-                    {sampleProduct.description}
-                  </p>
-                </Accordion>
-              </div>
             </div>
-          </div>
-          <div className={styles.suggestionContainer}>
-            <h2>You may also like</h2>
-            <ProductCardGrid
-              spacing
-              showSlider
-              height={400}
-              columns={4}
-              data={suggestions}
+          </Container>
+
+          <div className={styles.attributeContainer}>
+            <Split
+              image={'/cloth.png'}
+              alt={'attribute description'}
+              title={'Sustainability'}
+              description={
+                'We design our products to look good and to be used on a daily basis. And our aim is to inspire people to live with few timeless objects made to last. This is why quality over quantity is a cornerstone of our ethos and we have no interest in trends or seasonal collections.'
+              }
+              ctaText={'learn more'}
+              cta={() => navigate('/blog')}
+              bgColor={'var(--standard-light-grey)'}
             />
           </div>
-        </Container>
-
-        <div className={styles.attributeContainer}>
-          <Split
-            image={'/cloth.png'}
-            alt={'attribute description'}
-            title={'Sustainability'}
-            description={
-              'We design our products to look good and to be used on a daily basis. And our aim is to inspire people to live with few timeless objects made to last. This is why quality over quantity is a cornerstone of our ethos and we have no interest in trends or seasonal collections.'
-            }
-            ctaText={'learn more'}
-            cta={() => navigate('/blog')}
-            bgColor={'var(--standard-light-grey)'}
-          />
         </div>
-      </div>
+      )}
     </Layout>
   );
 };

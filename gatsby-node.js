@@ -16,10 +16,42 @@ exports.onCreateWebpackConfig = (helper) => {
   }
 };
 
+// const _products = await graphql(`
+// query getAllWooCommerceProductsNode {
+//   allWcProducts {
+//     edges {
+//       node {
+//         name
+//         sku
+//         price
+//         description
+//         tags {
+//           name
+//           slug
+//           id
+//         }
+//         categories {
+//           id
+//           name
+//         }
+//         images {
+//           src
+//           localFile {
+//             childImageSharp {
+//               gatsbyImageData(width: 700)
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// `);
+
 exports.createPages = async ({ graphql, actions }) => {
   /* Create product pages */
   const _products = await graphql(`
-    query getAllWooCommerceProducts {
+    query getAllWooCommerceProductsNode {
       allWcProducts {
         edges {
           node {
@@ -27,11 +59,17 @@ exports.createPages = async ({ graphql, actions }) => {
             sku
             price
             description
+            tags {
+              name
+              slug
+              id
+            }
             categories {
               id
               name
             }
             images {
+              src
               localFile {
                 childImageSharp {
                   gatsbyImageData(width: 700)
@@ -43,8 +81,6 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `);
-
-  console.log('================== products: ', _products);
 
   if (!_products) {
     throw new Error(`Unable to fetch woocommerce products`);
@@ -63,4 +99,15 @@ exports.createPages = async ({ graphql, actions }) => {
       context,
     });
   });
+};
+
+exports.sourceNodes = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+  type SiteSiteMetadata implements Node {
+    localFile: String,
+    wcProductsImages: String
+  }
+  `;
+  createTypes(typeDefs);
 };

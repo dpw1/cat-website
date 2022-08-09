@@ -127,11 +127,6 @@
           ]
         }
       ]
-    },
-    {
-      "menuLabel": "Donations",
-      "menuLink": "/donations",
-      "category": null
     }
   ],
   "filters": [

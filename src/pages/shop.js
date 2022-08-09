@@ -13,10 +13,45 @@ import ProductCardGrid from '../components/ProductCardGrid';
 import { generateMockProductData } from '../helpers/mock';
 import Button from '../components/Button';
 import Config from '../config.json';
+import { graphql } from 'gatsby';
 
-const ShopPage = (props) => {
+export const query = graphql`
+  {
+    allWcProducts {
+      edges {
+        node {
+          name
+          sku
+          price
+          description
+          tags {
+            name
+            slug
+            id
+          }
+          categories {
+            id
+            name
+          }
+          images {
+            src
+            localFile {
+              childImageSharp {
+                gatsbyImageData(width: 700)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const ShopPage = ({ data: _products }) => {
   const [showFilter, setShowFilter] = useState(false);
   const data = generateMockProductData(6, 'woman');
+
+  const products = _products.allWcProducts.edges;
 
   useEffect(() => {
     if (window !== undefined) {
@@ -33,28 +68,17 @@ const ShopPage = (props) => {
   return (
     <Layout>
       <div className={styles.root}>
-        <Container size={'large'} spacing={'min'}>
-          <div className={styles.breadcrumbContainer}>
-            <Breadcrumbs
-              crumbs={[
-                { link: '/', label: 'Home' },
-                { link: '/', label: 'Woman' },
-                { label: 'Sweaters' },
-              ]}
-            />
-          </div>
-        </Container>
         <Banner
           maxWidth={'650px'}
-          name={`Woman's Sweaters`}
+          name={`Cat Products`}
           subtitle={
-            'Look to our women’s sweaters for modern takes on one-and-done dressing. From midis in bold prints to dramatic floor-sweeping styles and easy all-in-ones, our edit covers every mood.'
+            'Hand picked collection of the cutest cat products out there. Our collection is always growing!'
           }
         />
         <Container size={'large'} spacing={'min'}>
           <div className={styles.metaContainer}>
-            <span className={styles.itemCount}>476 items</span>
-            <div className={styles.controllerContainer}>
+            <span className={styles.itemCount}>{products.length} items</span>
+            {/* <div className={styles.controllerContainer}>
               <div
                 className={styles.iconContainer}
                 role={'presentation'}
@@ -69,9 +93,9 @@ const ShopPage = (props) => {
                 <span>Sort by</span>
                 <Icon symbol={'caret'} />
               </div>
-            </div>
+            </div> */}
           </div>
-          <CardController
+          {/* <CardController
             closeFilter={() => setShowFilter(false)}
             visible={showFilter}
             filters={Config.filters}
@@ -79,17 +103,21 @@ const ShopPage = (props) => {
           <div className={styles.chipsContainer}>
             <Chip name={'XS'} />
             <Chip name={'S'} />
-          </div>
+          </div> */}
           <div className={styles.productContainer}>
             <span className={styles.mobileItemCount}>476 items</span>
-            <ProductCardGrid data={data}></ProductCardGrid>
+            <ProductCardGrid
+              columns={4}
+              products={products}
+              data={data}
+            ></ProductCardGrid>
           </div>
-          <div className={styles.loadMoreContainer}>
-            <span>6 of 456</span>
+          {/* <div className={styles.loadMoreContainer}>
+            <span>X of {products.length}</span>
             <Button fullWidth level={'secondary'}>
               LOAD MORE
             </Button>
-          </div>
+          </div> */}
         </Container>
       </div>
 
