@@ -65,7 +65,7 @@ const IndexPage = ({ data: _products }) => {
       <Hero
         image={'/woman-cat-1.jpg'}
         title={`Help cats while Amazon shopping.`}
-        subtitle={`Every sale via our links equals a donation to <b>Cat Rescue Toronto</b>.<br/>All transactions within Amazon's website.`}
+        subtitle={`Every sale via our links equals a donation to <b>Cat Rescue Toronto</b>.<br/>All transactions made safely on Amazon's website.`}
         ctaText={'shop now'}
         ctaAction={goToShop}
       />
@@ -122,17 +122,15 @@ const IndexPage = ({ data: _products }) => {
       {/* Quote */}
       <Quote
         bgColor={'var(--standard-light-grey)'}
-        title={'about Sydney'}
-        quote={
-          '“We believe in two things: the pursuit of quality in everything we do, and looking after one another. Everything else should take care of itself.”'
-        }
+        title={'― Jeremy Bentham'}
+        quote={`“The question is not, 'can they reason?' nor, 'can they talk?' but 'can they suffer?”`}
       />
 
       {/* Social Media */}
       <div className={styles.socialContainer}>
         <Title
-          name={'Styled by You'}
-          subtitle={'Tag @sydney to be featured.'}
+          name={'With you, for you'}
+          subtitle={'Check out our meme page on Instagram @memeowcats'}
         />
         <div className={styles.socialContentGrid}>
           <img src={`/social/socialMedia1.png`} alt={'social media 1'} />

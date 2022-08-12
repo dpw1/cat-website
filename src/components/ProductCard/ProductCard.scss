@@ -1,5 +1,9 @@
 [id] .ProductCard {
   position: relative;
+
+  div {
+    transition: all 0.8s ease;
+  }
   .detailsContainer {
     margin-top: 16px;
   }
@@ -29,16 +33,19 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    z-index: 1;
   }
 
   &-content {
     text-align: center;
   }
 
-  .ProductCard-image img {
+  .ProductCard-image:hover img {
+    transform: scale(1.03);
     transition: all 0.8s ease;
   }
-  .ProductCard-image:hover img {
+
+  &:hover div {
     transform: scale(1.03);
     transition: all 0.8s ease;
   }

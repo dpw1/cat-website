@@ -100,14 +100,3 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 };
-
-exports.sourceNodes = ({ actions }) => {
-  const { createTypes } = actions;
-  const typeDefs = `
-  type SiteSiteMetadata implements Node {
-    localFile: String,
-    wcProductsImages: String
-  }
-  `;
-  createTypes(typeDefs);
-};

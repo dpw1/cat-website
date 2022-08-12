@@ -40,6 +40,8 @@ const ProductPage = (props) => {
 
   const product = props.pageContext;
 
+  const url = createAmazonURL(product.sku);
+
   const categories = [
     { link: '/', label: 'Home' },
     {
@@ -52,14 +54,6 @@ const ProductPage = (props) => {
       )}`,
     },
   ];
-
-  function redirectToAmazon() {
-    const url = createAmazonURL(product.sku);
-
-    // if (window) {
-    //   window.location.href = url;
-    // }
-  }
 
   return (
     <Layout>
@@ -81,14 +75,15 @@ const ProductPage = (props) => {
                 <div className={styles.actionContainer}>
                   <div className={styles.addToButtonContainer}>
                     <Button
-                      onClick={() => {
-                        setText(`Loading...`);
-                        redirectToAmazon();
+                      className="Product-atc"
+                      onClick={(e) => {
+                        const $child = document.querySelector(`.Product-atc a`);
+                        $child.click();
                       }}
                       fullWidth
                       level={'primary'}
                     >
-                      {text}
+                      <a href={url}>{text}</a>
                     </Button>
                   </div>
                 </div>
@@ -96,15 +91,7 @@ const ProductPage = (props) => {
                 <div className={`Product-description ${styles.description}`}>
                   {ReactHtmlParser(product.description)}
 
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      redirectToAmazon();
-                    }}
-                  >
-                    View more details on Amazon
-                  </a>
+                  <a href={url}>View more details on Amazon</a>
                 </div>
 
                 <div className={styles.informationContainer}>

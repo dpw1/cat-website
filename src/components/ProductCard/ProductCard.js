@@ -38,6 +38,8 @@ const ProductCard = (props) => {
 
   return (
     <div className={`ProductCard ${styles.root}`}>
+      <Link className="ProductCard-link" to={`/products/${product.sku}`}></Link>
+
       <div
         className={styles.imageContainer}
         onClick={() => handleRouteToProduct()}
@@ -70,7 +72,6 @@ const ProductCard = (props) => {
         </div>
         <span className={styles.meta}>{meta}</span>
       </div>
-      <Link className="ProductCard-link" to={`/products/${product.sku}`}></Link>
     </div>
   );
 };

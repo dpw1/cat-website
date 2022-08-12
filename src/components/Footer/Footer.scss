@@ -20,4 +20,13 @@
     align-items: center;
     justify-content: center;
   }
+
+  &-amazon {
+    max-width: 100%;
+    svg {
+      max-width: 100%;
+      height: auto;
+      width: 320px;
+    }
+  }
 }

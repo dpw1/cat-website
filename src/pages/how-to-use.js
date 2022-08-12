@@ -32,7 +32,7 @@ const HowToUsePage = (props) => {
         </div>
         <Container size={'large'} spacing={'min'}>
           <div className={styles.content} style={{ paddingTop: '80px' }}>
-            <h3>Built By Matter.</h3>
+            <h3>Built With ❤️ By Matter.</h3>
             <div id="#builtBy" ref={builtRef}>
               <p>
                 This theme is proudly brought to you by the team at{' '}

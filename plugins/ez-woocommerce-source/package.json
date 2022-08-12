@@ -1,12 +1,12 @@
 {
-  "name": "@pasdo501/gatsby-source-woocommerce",
-  "version": "0.15.1",
-  "description": "Gatsby source plugin for WooCommerce with improved field type support",
+  "name": "ez-woocommerce-source",
+  "version": "0.0.1",
+  "description": "Gatsby source plugin for WooCommerce.",
   "main": "gatsby-node.js",
   "scripts": {
     "test": "jest --watch"
   },
-  "author": "Dominik Paschke, forked from Marc Glasser",
+  "author": "DPW, forked from Dominik Paschke",
   "license": "ISC",
   "dependencies": {
     "@woocommerce/woocommerce-rest-api": "^1.0.1",

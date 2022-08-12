@@ -1,6 +1,12 @@
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
+const {
+  createRemoteFileNode,
+  createFilePath,
+} = require(`gatsby-source-filesystem`);
+
 let TOTAL_IMAGES = 0;
 let DOWNLOADING_IMAGES_LOOP = 0;
+const path = require('path');
+const fs = require('fs');
 
 /**
  * Add date and time stamp to message before logging to console.
@@ -14,6 +20,10 @@ const timeStampedLog = (message) => {
     } > ${message}`
   );
 };
+
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
 
 // @8ctopotamus customization
 const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
@@ -413,6 +423,58 @@ const normaliseFieldName = (name) => {
   }, '');
 };
 
+var searchRecursive = function (dir, pattern) {
+  // This is where we store pattern matches of all files inside the directory
+  var results = [];
+
+  // Read contents of directory
+  fs.readdirSync(dir).forEach(function (dirInner) {
+    dirInner = path.resolve(dir, dirInner);
+
+    var stat = fs.statSync(dirInner);
+
+    if (stat.isDirectory()) {
+      results = results.concat(searchRecursive(dirInner, pattern));
+    }
+
+    if (stat.isFile() && dirInner.includes(pattern)) {
+      results.push(dirInner);
+    }
+  });
+
+  return results;
+};
+
+const getNodeIdFromDownloadedImage = (name) => {
+  const _directory = path.join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    '.cache',
+    'caches',
+    'ez-woocommerce-source'
+  );
+
+  const directory = `${_directory}`;
+
+  var file = searchRecursive(directory, name);
+
+  if (file && file.length >= 1) {
+    const _file = file[0].split('\\');
+
+    const src = replaceAll(file[0], '\\\\', '/');
+    const parentId = _file[_file.length - 2];
+
+    return {
+      src,
+      parentId,
+    };
+  }
+
+  return null;
+};
+
 const downloadMedia = async ({
   n,
   image,
@@ -427,11 +489,12 @@ const downloadMedia = async ({
   let fileNodeID;
   let fileNode;
   const mediaDataCacheKey = `wordpress-media-${image.id}`;
+
+  const file = getNodeIdFromDownloadedImage(image.name);
+
   const cacheMediaData = await cache.get(mediaDataCacheKey);
 
-  /* TODO
-  do not download image on deve
-  */
+  // console.log('MY CACHE', cacheMediaData);
 
   if (cacheMediaData && n.modified === cacheMediaData.modified) {
     fileNode = getNode(cacheMediaData.fileNodeID);
@@ -453,20 +516,19 @@ const downloadMedia = async ({
         process.env.NODE_ENV !== 'development'
       ) {
         console.log(
-          `ez-woocommerce-source: Downloading images. ${
+          `ez-woocommerce-source: Downloading images. ${DOWNLOADING_IMAGES_LOOP} / ${TOTAL_IMAGES} ${Math.floor(
             (DOWNLOADING_IMAGES_LOOP / TOTAL_IMAGES) * 100
-          }%`
+          )}%`
         );
       }
 
       fileNode = await createRemoteFileNode({
         url:
           process.env.NODE_ENV === 'development'
-            ? `https://cdnb.artstation.com/p/assets/images/images/008/358/375/large/emily-ritchie-white-n-black.jpg?1512240335`
+            ? `https://www.google.com.br/images/branding/googlelogo'/2x/googlelogo_color_160x56dp.png`
             : image.src,
-
-        store,
         cache,
+        store,
         createNode,
         createNodeId,
         parentNodeId: n.id.toString(),
@@ -486,6 +548,7 @@ const downloadMedia = async ({
       DOWNLOADING_IMAGES_LOOP += 1;
     }
   }
+
   if (fileNodeID) {
     image.localFile___NODE = fileNodeID;
   }
@@ -545,6 +608,8 @@ const downloadACFMedia = async ({
   }
 };
 
+/*xxx
+ */
 const mapMediaToNodes = async ({
   nodes,
   store,
@@ -602,6 +667,8 @@ const mapMediaToNodes = async ({
         });
       }
 
+      /* xxx */
+
       if (n.images && n.images.length) {
         TOTAL_IMAGES += n.images.length;
 
@@ -610,14 +677,18 @@ const mapMediaToNodes = async ({
         }
 
         for (let [index, image] of n.images.entries()) {
+          const file = getNodeIdFromDownloadedImage(image.name);
+
+          /** todo */
+
           await downloadMedia({
             image,
             ...commonParams,
           });
         }
+
         return n;
       } else if (n.image && n.image.id) {
-        console.log(`N.IMAGE AND SSS`);
         const { image } = n;
         await downloadMedia({
           image,

@@ -48,7 +48,6 @@ const Gallery = (props) => {
               key={index}
               className={`Gallery-imageContainer ${styles.imageContainer}`}
             >
-              <GatsbyImage image={image}></GatsbyImage>
               {isDevEnvironment() ? (
                 <img src={src}></img>
               ) : (

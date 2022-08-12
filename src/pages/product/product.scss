@@ -57,6 +57,12 @@
   [class*='details'] {
     @media (min-width: 769px) {
       max-width: 500px;
+      min-width: 440px;
     }
+  }
+
+  &-atc a {
+    color: inherit !important;
+    transition: none !important;
   }
 }
