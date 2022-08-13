@@ -16,38 +16,6 @@ exports.onCreateWebpackConfig = (helper) => {
   }
 };
 
-// const _products = await graphql(`
-// query getAllWooCommerceProductsNode {
-//   allWcProducts {
-//     edges {
-//       node {
-//         name
-//         sku
-//         price
-//         description
-//         tags {
-//           name
-//           slug
-//           id
-//         }
-//         categories {
-//           id
-//           name
-//         }
-//         images {
-//           src
-//           localFile {
-//             childImageSharp {
-//               gatsbyImageData(width: 700)
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// `);
-
 exports.createPages = async ({ graphql, actions }) => {
   /* Create product pages */
   const _products = await graphql(`
@@ -59,11 +27,7 @@ exports.createPages = async ({ graphql, actions }) => {
             sku
             price
             description
-            tags {
-              name
-              slug
-              id
-            }
+
             categories {
               id
               name

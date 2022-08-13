@@ -137,15 +137,21 @@ exports.sourceNodes = async (
     nodes = await asyncGetProductVariations(nodes, WooCommerce, verbose);
     nodes = await asyncGetProductAttributes(nodes, WooCommerce, verbose);
 
-    nodes = await mapMediaToNodes({
-      nodes,
-      store,
-      cache,
-      createNode,
-      createNodeId,
-      touchNode,
-      getNode,
-    });
+    try {
+      nodes = await mapMediaToNodes({
+        nodes,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+        touchNode,
+        getNode,
+      });
+    } catch (err) {
+      if (verbose) {
+        console.log(`ez-woocommerce-source: Image failed to download.`);
+      }
+    }
 
     if (verbose) {
       console.log(`ez-woocommerce-source: All images downloaded.`);

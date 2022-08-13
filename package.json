@@ -40,6 +40,7 @@
     "string-replace-all": "^2.0.0"
   },
   "devDependencies": {
+    "gatsby-plugin-favicons": "^2.0.0",
     "gatsby-plugin-netlify": "^4.4.0",
     "gh-pages": "^4.0.0",
     "netlify-plugin-cypress": "~2.2.0",

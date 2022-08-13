@@ -65,4 +65,11 @@
     color: inherit !important;
     transition: none !important;
   }
+
+  [class*='slick'] [class*='imageContainer'] img {
+    @media (max-width: 767px) {
+      max-height: 350px !important;
+      object-fit: contain;
+    }
+  }
 }

@@ -10,13 +10,14 @@ import ProductCollectionGrid from '../components/ProductCollectionGrid';
 import ProductCardGrid from '../components/ProductCardGrid';
 import Quote from '../components/Quote';
 import Title from '../components/Title';
-import { graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 
 import { generateMockBlogData, generateMockProductData } from '../helpers/mock';
 
 import * as styles from './index.module.css';
 import { Link, navigate } from 'gatsby';
 import Message from './../components/Message/Message';
+import { getProducts, storeProducts } from '../helpers/utils';
 
 export const query = graphql`
   query {
@@ -27,11 +28,7 @@ export const query = graphql`
           sku
           price
           description
-          tags {
-            name
-            slug
-            id
-          }
+
           categories {
             id
             name
@@ -52,12 +49,27 @@ export const query = graphql`
 
 const IndexPage = ({ data: _products }) => {
   const newArrivals = generateMockProductData(3, 'shirt');
+  const [products, setProducts] = React.useState([]);
 
   const goToShop = () => {
     navigate('/shop');
   };
 
-  const products = _products.allWcProducts.edges;
+  React.useEffect(() => {
+    if (products.length <= 0) {
+      const storedProducts = getProducts();
+
+      console.log('mmm', storedProducts);
+
+      setProducts(
+        storedProducts ? storedProducts : _products.allWcProducts.edges
+      );
+
+      if (!storedProducts) {
+        storeProducts(_products.allWcProducts.edges);
+      }
+    }
+  }, []);
 
   return (
     <Layout disablePaddingBottom>
@@ -78,11 +90,19 @@ const IndexPage = ({ data: _products }) => {
           <Title name={'New Arrivals'} link={'/shop'} textLink={'view all'} />
           <ProductCardGrid
             spacing={true}
-            showSlider={true}
+            showSlider={false}
             columns={4}
-            data={newArrivals}
+            limit={8}
             products={products}
           />
+
+          <div style={{ display: 'block', marginTop: 60 }}>
+            <Title
+              name={'More products?'}
+              link={'/shop'}
+              textLink={'view the complete list here'}
+            />
+          </div>
         </Container>
       </div>
 
@@ -122,23 +142,29 @@ const IndexPage = ({ data: _products }) => {
       {/* Quote */}
       <Quote
         bgColor={'var(--standard-light-grey)'}
-        title={'― Jeremy Bentham'}
-        quote={`“The question is not, 'can they reason?' nor, 'can they talk?' but 'can they suffer?”`}
+        title={'– Brian Tracy'}
+        quote={`“Always give without remembering and always receive without forgetting.”`}
       />
 
       {/* Social Media */}
       <div className={styles.socialContainer}>
         <Title
           name={'With you, for you'}
-          subtitle={'Check out our meme page on Instagram @memeowcats'}
+          subtitle={
+            'Follow us on Instagram @memeowcats to join our Memeowers family. ♡'
+          }
         />
+
         <div className={styles.socialContentGrid}>
-          <img src={`/social/socialMedia1.png`} alt={'social media 1'} />
-          <img src={`/social/socialMedia2.png`} alt={'social media 2'} />
-          <img src={`/social/socialMedia3.png`} alt={'social media 3'} />
-          <img src={`/social/socialMedia4.png`} alt={'social media 4'} />
+          <img src={`/instagram-4.jpg`} alt={`Memeowcats' meme image`} />
+          <img src={`/instagram-2.jpg`} alt={`Memeowcats' meme image`} />
+          <img src={`/instagram-1.jpg`} alt={`Memeowcats' meme image`} />
+          <img src={`/instagram-3.jpg`} alt={`Memeowcats' meme image`} />
+
+          <a href="https://instagram.com/memeowcats" target="_blank"></a>
         </div>
       </div>
+
       <AttributeGrid />
     </Layout>
   );

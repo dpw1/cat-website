@@ -16,7 +16,7 @@ module.exports = {
         api: 'memeow1copy.local',
         // true if using https. false otherwise.
         https: true,
-        limit: 1,
+        // limit: 10,
         api_keys: {
           consumer_key: `ck_73045f5846f35b008ccf559cd898e8985f4350c4`,
           consumer_secret: `cs_d9fdef09184c4778af6eb52ca4ea8d3819a13cda`,

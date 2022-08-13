@@ -1,8 +1,14 @@
-.Footer {
+[id] .Footer {
   &-bottom {
     display: flex !important;
-    align-items: center;
-    justify-content: center;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 0 !important;
+  }
+
+  [class*='copyrightContainer'] {
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   [class*='Bottom'] {

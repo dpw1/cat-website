@@ -153,6 +153,12 @@
     margin-bottom: -150px;
 }
 
+@media (max-width: 768px){
+    .attributeContainer {
+        margin-top: 0px;
+    }
+}
+
 .show {
     visibility: visible;
     opacity: 1;

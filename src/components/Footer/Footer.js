@@ -117,7 +117,7 @@ const Footer = (prop) => {
                 </picture>
               </div>
               <span className="Footer-bottom">
-                <span>{new Date().getFullYear()} (©) Built by </span>{' '}
+                <span>{new Date().getFullYear()} (©) Built with ❤️ by </span>{' '}
                 <span style={{ textDecoration: 'underline', marginLeft: 5 }}>
                   Memeowcats.
                 </span>{' '}

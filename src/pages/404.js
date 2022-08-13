@@ -8,13 +8,6 @@ import FormInputField from '../components/FormInputField/FormInputField';
 import Layout from '../components/Layout';
 
 const NotFoundPage = () => {
-  const [search, setSearch] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate(`/search?q=${search}`);
-  };
-
   return (
     <Layout disablePaddingBottom>
       <Container size={'medium'}>

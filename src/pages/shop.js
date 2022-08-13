@@ -14,9 +14,10 @@ import { generateMockProductData } from '../helpers/mock';
 import Button from '../components/Button';
 import Config from '../config.json';
 import { graphql } from 'gatsby';
+import { getProducts, storeProducts } from '../helpers/utils';
 
 export const query = graphql`
-  {
+  query teststyje {
     allWcProducts {
       edges {
         node {
@@ -24,11 +25,7 @@ export const query = graphql`
           sku
           price
           description
-          tags {
-            name
-            slug
-            id
-          }
+
           categories {
             id
             name
@@ -50,10 +47,23 @@ export const query = graphql`
 const ShopPage = ({ data: _products }) => {
   const [showFilter, setShowFilter] = useState(false);
   const data = generateMockProductData(6, 'woman');
-
-  const products = _products.allWcProducts.edges;
+  const [products, setProducts] = React.useState([]);
 
   useEffect(() => {
+    if (products.length <= 0) {
+      const storedProducts = getProducts();
+
+      console.log('mmm', storedProducts);
+
+      setProducts(
+        storedProducts ? storedProducts : _products.allWcProducts.edges
+      );
+
+      if (!storedProducts) {
+        storeProducts(_products.allWcProducts.edges);
+      }
+    }
+
     if (window !== undefined) {
       window.addEventListener('keydown', escapeHandler);
       return () => window.removeEventListener('keydown', escapeHandler);
@@ -105,12 +115,10 @@ const ShopPage = ({ data: _products }) => {
             <Chip name={'S'} />
           </div> */}
           <div className={styles.productContainer}>
-            <span className={styles.mobileItemCount}>476 items</span>
-            <ProductCardGrid
-              columns={4}
-              products={products}
-              data={data}
-            ></ProductCardGrid>
+            <span className={styles.mobileItemCount}>
+              {products.length} items
+            </span>
+            <ProductCardGrid columns={4} products={products}></ProductCardGrid>
           </div>
           {/* <div className={styles.loadMoreContainer}>
             <span>X of {products.length}</span>

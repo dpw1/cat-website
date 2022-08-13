@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '../Button';
 import * as styles from './Split.module.css';
+import ReactHtmlParser from 'react-html-parser';
 
 const Split = (props) => {
   const { image, alt, title, description, ctaText, cta, bgColor } = props;
@@ -13,10 +14,10 @@ const Split = (props) => {
       >
         <div className={styles.detailContainer}>
           <h4>{title}</h4>
-          <p>{description}</p>
-          <Button className={styles.button} level={'primary'} onClick={cta}>
+          <div>{ReactHtmlParser(description)}</div>
+          {/* <Button className={styles.button} level={'primary'} onClick={cta}>
             {ctaText}
-          </Button>
+          </Button> */}
         </div>
       </div>
       <div className={styles.imageContainer}>

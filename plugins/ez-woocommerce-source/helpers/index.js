@@ -8,6 +8,8 @@ let DOWNLOADING_IMAGES_LOOP = 0;
 const path = require('path');
 const fs = require('fs');
 
+const DUMMY_IMAGE = `https://www.google.com.br/images/branding/googlelogo/2x/googlelogo_color_160x56dp.png`;
+
 /**
  * Add date and time stamp to message before logging to console.
  *
@@ -496,6 +498,34 @@ const downloadMedia = async ({
 
   // console.log('MY CACHE', cacheMediaData);
 
+  // if (file){
+  //   fileNode = await createRemoteFileNode({
+  //     url: process.env.NODE_ENV === 'development' ? DUMMY_IMAGE : image.src,
+  //     cache,
+  //     store,
+  //     createNode,
+  //     createNodeId,
+  //     parentNodeId: n.id.toString(),
+  //   });
+
+  //   console.log('NEW ID ', fileNode.id);
+
+  //   let updated = getNode(fileNode.id);
+
+  //   updated.name = `llmaamamama`;
+
+  //   touchNode(updated);
+
+  //   if (fileNode) {
+  //     fileNodeID = fileNode.id;
+
+  //     await cache.set(mediaDataCacheKey, {
+  //       fileNodeID,
+  //       modified: n.modified,
+  //     });
+  //   }
+  // }
+
   if (cacheMediaData && n.modified === cacheMediaData.modified) {
     fileNode = getNode(cacheMediaData.fileNodeID);
 
@@ -523,10 +553,7 @@ const downloadMedia = async ({
       }
 
       fileNode = await createRemoteFileNode({
-        url:
-          process.env.NODE_ENV === 'development'
-            ? `https://www.google.com.br/images/branding/googlelogo'/2x/googlelogo_color_160x56dp.png`
-            : image.src,
+        url: process.env.NODE_ENV === 'development' ? DUMMY_IMAGE : image.src,
         cache,
         store,
         createNode,

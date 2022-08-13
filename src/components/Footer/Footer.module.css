@@ -148,7 +148,7 @@
 
 .copyrightContainer {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     flex-direction: column;
 }
 

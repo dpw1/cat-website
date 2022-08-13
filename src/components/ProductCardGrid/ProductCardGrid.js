@@ -5,14 +5,25 @@ import Drawer from '../Drawer';
 import ProductCard from '../ProductCard';
 import QuickView from '../QuickView';
 import Slider from '../Slider';
+import { graphql, useStaticQuery } from 'gatsby';
 
 const ProductCardGrid = (props) => {
   const [showQuickView, setShowQuickView] = useState(false);
-  const { columns = 4, data, products, spacing, showSlider = false } = props;
+  let {
+    limit = 100,
+    products,
+    columns = 4,
+    spacing,
+    showSlider = false,
+  } = props;
 
   const columnCount = {
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
   };
+
+  // const test = products.
+
+  products = products && products.length >= 1 ? products.splice(0, limit) : [];
 
   const renderCards = () => {
     return (
@@ -20,6 +31,7 @@ const ProductCardGrid = (props) => {
       products.length >= 1 &&
       products.map((_product, index) => {
         const product = _product.node;
+
         return (
           <ProductCard
             key={index}
@@ -43,12 +55,12 @@ const ProductCardGrid = (props) => {
         }`}
         style={columnCount}
       >
-        {data && renderCards()}
+        {renderCards()}
       </div>
 
       {showSlider === true && (
         <div className={styles.mobileSlider}>
-          <Slider spacing={spacing}>{data && renderCards()}</Slider>
+          <Slider spacing={spacing}>{renderCards()}</Slider>
         </div>
       )}
 

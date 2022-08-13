@@ -91,7 +91,7 @@ const ProductPage = (props) => {
                 <div className={`Product-description ${styles.description}`}>
                   {ReactHtmlParser(product.description)}
 
-                  <a href={url}>View more details on Amazon</a>
+                  <a href={url}>View this product on Amazon</a>
                 </div>
 
                 <div className={styles.informationContainer}>
@@ -123,14 +123,23 @@ const ProductPage = (props) => {
 
           <div className={styles.attributeContainer}>
             <Split
-              image={'/cloth.png'}
-              alt={'attribute description'}
-              title={'Sustainability'}
-              description={
-                'We design our products to look good and to be used on a daily basis. And our aim is to inspire people to live with few timeless objects made to last. This is why quality over quantity is a cornerstone of our ethos and we have no interest in trends or seasonal collections.'
-              }
-              ctaText={'learn more'}
-              cta={() => navigate('/blog')}
+              image={'/woman-cat-2.jpg'}
+              alt={'Woman hugging cat.'}
+              title={'Community'}
+              description={`<p>
+                Your own charitable donations can inspire your nearest and
+                dearest to give to causes important to them, and could even
+                bring about a family-wide effort to back a charity or charities
+                that have special significance to you as a group.
+              </p>
+              <p>
+                Giving creates a bond, helping to bolster relationships through
+                a shared goal and raising more money than could otherwise be
+                possible through individual donations. Chances are, many of your
+                family members are already giving to charity, so working
+                together could help you to make even more of a positive impact.
+              </p>
+              <p>Thank you for joining us!</p>`}
               bgColor={'var(--standard-light-grey)'}
             />
           </div>

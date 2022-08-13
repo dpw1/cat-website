@@ -18,7 +18,6 @@ import * as styles from './Header.module.css';
 import './Header.scss';
 
 const Header = (prop) => {
-  const [showMiniCart, setShowMiniCart] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
 
@@ -29,7 +28,8 @@ const Header = (prop) => {
   const [search, setSearch] = useState('');
 
   const searchRef = createRef();
-  const bannerMessage = 'For every sale made we make a donation to cats.com';
+  const bannerMessage = ``;
+
   const searchSuggestions = [
     'Oversize sweaters',
     'Lama Pajamas',
@@ -83,14 +83,17 @@ const Header = (prop) => {
 
   return (
     <div className={`Header ${styles.root}`}>
-      <div className={styles.headerMessageContainer}>
-        <span>{bannerMessage}</span>
-      </div>
+      {bannerMessage !== '' && (
+        <div className={styles.headerMessageContainer}>
+          <span>{bannerMessage}</span>
+        </div>
+      )}
+
       <Container size={'large'} spacing={'min'}>
         {/* header container */}
         <div className={styles.header}>
           <div className={`Header- ${styles.linkContainer}`}>
-            <nav
+            {/* <nav
               role={'presentation'}
               onMouseLeave={() => {
                 setShowMenu(false);
@@ -108,9 +111,10 @@ const Header = (prop) => {
                   {navObject.menuLabel}
                 </Link>
               ))}
-            </nav>
+            </nav> */}
           </div>
           <div
+            style={{ visibility: 'hidden' }}
             role={'presentation'}
             onClick={() => {
               setMobileMenu(!mobileMenu);
