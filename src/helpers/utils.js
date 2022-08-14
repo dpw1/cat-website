@@ -1,4 +1,5 @@
 const SESSION_STORAGE_PRODUCTS_CACHE = `products_cache`;
+const SESSION_STORAGE_COLLECTIONS_SCROLL_POSITION = `collection_scroll_position`;
 
 export function isDevEnvironment() {
   try {
@@ -13,6 +14,21 @@ export function isDevEnvironment() {
       return false;
     }
     return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+export function isCollectionsPage() {
+  try {
+    if (window === undefined || !window) {
+      return false;
+    }
+
+    if (/shop\//.test(window.location.href)) {
+      return true;
+    }
+    return false;
   } catch (err) {
     return false;
   }
@@ -33,4 +49,28 @@ export function getProducts() {
     return null;
   }
   return products;
+}
+
+export function storeCollectionScrollPosition(position) {
+  if (!isCollectionsPage()) {
+    return;
+  }
+
+  sessionStorage.setItem(SESSION_STORAGE_COLLECTIONS_SCROLL_POSITION, position);
+}
+
+export function getCollectionScrollPosition() {
+  if (!isCollectionsPage()) {
+    return;
+  }
+
+  const position = sessionStorage.getItem(
+    SESSION_STORAGE_COLLECTIONS_SCROLL_POSITION
+  );
+
+  if (position) {
+    return position;
+  }
+
+  return 0;
 }

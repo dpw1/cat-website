@@ -24,6 +24,7 @@ import AddItemNotificationContext from '../../context/AddItemNotificationProvide
 import './product.scss';
 
 import { createAmazonURL } from './../../helpers/general';
+import { isDevEnvironment } from '../../helpers/utils';
 
 const ProductPage = (props) => {
   const ctxAddItemNotification = useContext(AddItemNotificationContext);
@@ -129,7 +130,8 @@ const ProductPage = (props) => {
               description={`<p>
                 Your own charitable donations can inspire your nearest and
                 dearest to give to causes important to them, and could even
-                bring about a family-wide effort to back a charity or charities
+                bring about a family-wide import { getImage } from 'gatsby-plugin-image';
+effort to back a charity or charities
                 that have special significance to you as a group.
               </p>
               <p>
@@ -150,3 +152,32 @@ const ProductPage = (props) => {
 };
 
 export default ProductPage;
+
+export const Head = ({ location, params, data, pageContext }) => {
+  const image = () => {
+    const img = pageContext.images[0];
+    const src = img.src;
+    const image = img.hasOwnProperty('localFile')
+      ? img.localFile.childImageSharp.gatsbyImageData.images.fallback.src
+      : '';
+
+    return isDevEnvironment() ? src : image;
+  };
+
+  const seo = {
+    title: pageContext.name,
+    description: `${pageContext.name}`,
+    image: image(),
+  };
+
+  return (
+    <>
+      <title>{seo.title}</title>
+      <meta
+        name="description"
+        content={`For every sale we make a donation to help cats in need. All purchases made through Amazon.`}
+      />
+      <meta name="image" data-seo content={seo.image} />
+    </>
+  );
+};

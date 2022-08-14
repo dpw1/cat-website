@@ -59,8 +59,6 @@ const IndexPage = ({ data: _products }) => {
     if (products.length <= 0) {
       const storedProducts = getProducts();
 
-      console.log('mmm', storedProducts);
-
       setProducts(
         storedProducts ? storedProducts : _products.allWcProducts.edges
       );
@@ -171,3 +169,19 @@ const IndexPage = ({ data: _products }) => {
 };
 
 export default IndexPage;
+
+export const Head = ({ location, params, data, pageContext }) => {
+  const seo = {
+    title: `Memeowcats | Help Cats While Shopping`,
+    description: `For every sale we make a donation to help cats in need. All purchases safely made through Amazon.`,
+    image: `/woman-cat-1.jpg`,
+  };
+
+  return (
+    <>
+      <title>{seo.title}</title>
+      <meta name="description" content={seo.description} />
+      <meta name="image" data-seo content={seo.image} />
+    </>
+  );
+};

@@ -13,8 +13,14 @@ import ProductCardGrid from '../components/ProductCardGrid';
 import { generateMockProductData } from '../helpers/mock';
 import Button from '../components/Button';
 import Config from '../config.json';
-import { graphql } from 'gatsby';
-import { getProducts, storeProducts } from '../helpers/utils';
+import { graphql, useScrollRestoration } from 'gatsby';
+import {
+  getCollectionScrollPosition,
+  getProducts,
+  isCollectionsPage,
+  storeCollectionScrollPosition,
+  storeProducts,
+} from '../helpers/utils';
 
 export const query = graphql`
   query teststyje {
@@ -49,11 +55,26 @@ const ShopPage = ({ data: _products }) => {
   const data = generateMockProductData(6, 'woman');
   const [products, setProducts] = React.useState([]);
 
+  function handleScrolling() {
+    if (window && isCollectionsPage()) {
+      function scrollToCorrectPosition() {
+        const position = getCollectionScrollPosition();
+        console.log('must return', position);
+        window.scrollTo(0, position);
+      }
+
+      scrollToCorrectPosition();
+
+      window.addEventListener('scroll', function () {
+        console.log('storing: ', window.scrollY);
+        storeCollectionScrollPosition(window.scrollY);
+      });
+    }
+  }
+
   useEffect(() => {
     if (products.length <= 0) {
       const storedProducts = getProducts();
-
-      console.log('mmm', storedProducts);
 
       setProducts(
         storedProducts ? storedProducts : _products.allWcProducts.edges
@@ -63,20 +84,14 @@ const ShopPage = ({ data: _products }) => {
         storeProducts(_products.allWcProducts.edges);
       }
     }
-
-    if (window !== undefined) {
-      window.addEventListener('keydown', escapeHandler);
-      return () => window.removeEventListener('keydown', escapeHandler);
-    }
   }, []);
 
-  const escapeHandler = (e) => {
-    if (e?.keyCode === undefined) return;
-    if (e.keyCode === 27) setShowFilter(false);
-  };
+  const ulScrollRestoration = useScrollRestoration(
+    `memeowcats-collection-page`
+  );
 
   return (
-    <Layout>
+    <Layout {...ulScrollRestoration}>
       <div className={styles.root}>
         <Banner
           maxWidth={'650px'}
@@ -135,3 +150,19 @@ const ShopPage = ({ data: _products }) => {
 };
 
 export default ShopPage;
+
+export const Head = ({ location, params, data, pageContext }) => {
+  const seo = {
+    title: `Memeowcats | Shop`,
+    description: `The best cat products in one place!`,
+    image: `/woman-cat-1.jpg`,
+  };
+
+  return (
+    <>
+      <title>{seo.title}</title>
+      <meta name="description" content={seo.description} />
+      <meta name="image" data-seo content={seo.image} />
+    </>
+  );
+};
