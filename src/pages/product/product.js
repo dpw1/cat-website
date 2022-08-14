@@ -155,7 +155,10 @@ export default ProductPage;
 
 export const Head = ({ location, params, data, pageContext }) => {
   const image = () => {
-    const img = pageContext.images[0];
+    const img =
+      pageContext && pageContext.hasOwnProperty('images')
+        ? pageContext.images[0]
+        : '';
     const src = img.src;
     const image = img.hasOwnProperty('localFile')
       ? img.localFile.childImageSharp.gatsbyImageData.images.fallback.src
